@@ -56,7 +56,7 @@ export default class SignUp extends Component {
 			},
 
 			password: {
-				message: "Password shoud has more than 3 characters.",
+				message: "Password should has more than 3 characters.",
 				doValidate: () => {
 					const value = _.get(user, 'password', '');
 
@@ -111,11 +111,34 @@ export default class SignUp extends Component {
 		})
 	}
 
-  _onSubmit(event){
+	//******************************이부분은 참고용
+	addSignupPost = (e) => {
+		e.preventDefault();
+		let name = this.state.user.name
+		let email = this.state.user.email
+		let password = this.state.user.password
+
+		fetch('https://jsonplaceholder.typicode.com/posts', {
+			method : 'POST',
+			headers: {
+				'Accept' : 'application/JSON, text/plain, */*',
+				'Content-type' : 'application/json'
+			},
+			body:JSON.stringify({name:name, email:email, password:password})
+		})
+		.then((res) => res.json())
+		.then((data) => console.log(data))
+	}
+	/////************************************************ */
+
+
+
+
+  _onSubmit = (event) => {
 
 		const {isLogin,user} = this.state; 
 		event.preventDefault();
-
+		console.log(event.target);
     let fieldNeedToValidate = ['email', 'password'];
     
 		if(!isLogin){
@@ -127,8 +150,46 @@ export default class SignUp extends Component {
 				console.log("The form is validated? ", isValid);
 
 				if(isValid){
+					console.log("@@@@@@@@@@@@@@@@@@@@@@@@")
 					// send request to backend
+					// addSignupPost(event)
+
+					event.preventDefault();
+					let name = this.state.user.name
+					let email = this.state.user.email
+					let password = this.state.user.password
+			
+					fetch('https://jsonplaceholder.typicode.com/posts', {
+						method : 'POST',
+						headers: {
+							'Accept' : 'application/JSON, text/plain, */*',
+							'Content-type' : 'application/json'
+						},
+						body:JSON.stringify({name:name, email:email, password:password})
+					})
+					.then((res) => res.json())
+					.then((data) => console.log(data))
+					.catch((data) => console.log('wtf') )
+
 					if(isLogin){
+						console.log('###################')
+
+						event.preventDefault();
+						let email = this.state.user.email
+						let password = this.state.user.password
+				
+						fetch('https://jsonplaceholder.typicode.com/posts', {
+							method : 'POST',
+							headers: {
+								'Accept' : 'application/JSON, text/plain, */*',
+								'Content-type' : 'application/json'
+							},
+							body:JSON.stringify({email:email, password:password})
+						})
+						.then((res) => res.json())
+						.then((data) => console.log('$$$$$$$$$$data$$$$$$$$$', data))
+						.catch((data) => console.log('wtf') )
+
 						// do send data for login endpoint
 						// login(this.state.user.email, this.state.user.password).then((response) => {
 						// 	/// login success
