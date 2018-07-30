@@ -188,23 +188,23 @@ export default class SignUp extends Component {
             {
               !isLogin ? <div>
                 <div className={classNames('app-form-item', {'error': _.get(error, 'name')})}>
-                  <label htmlFor="name-id">Nickname</label>
+                  <label htmlFor="name-id">name</label>
                   <input value={user.name} onChange={this._onTextFieldChange} placeholder="Only valid in Korean" id="name-id" type="text" name="name" />
                 </div>
               </div>: null
             }
             <div className={classNames('app-form-item', {'error': _.get(error, 'email')})}>
-              <label htmlFor="email-id">Email</label>
+              <label htmlFor="email-id">email</label>
               <input value={user.email} onChange={this._onTextFieldChange} placeholder="Your email address" id="email-id" type="email" name="email" />
             </div>
             <div className={classNames('app-form-item', {'error': _.get(error, 'password')})}>
-              <label htmlFor="password-id">Password</label>
+              <label htmlFor="password-id">password</label>
               <input value={user.password} onChange={this._onTextFieldChange} placeholder="Your password" id="password-id" type="password" name="password" />
             </div>
             {
               !isLogin ? <div>
                   <div className={classNames('app-form-item', {'error': _.get(error, 'confirmPassword')})}>
-                    <label htmlFor="confirm-password-id">Confirm Password</label>
+                    <label htmlFor="confirm-password-id">confirm password</label>
                     <input value={user.confirmPassword} onChange={this._onTextFieldChange} placeholder="Confirm password" id="confirm-password-id" type="password" name="confirmPassword" />
                 </div>
               </div>: null
