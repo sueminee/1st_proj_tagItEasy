@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Login from './Tag2_log-in'
 import Signup from './Tag1_sign-up';
+import './img/logo.png'
 
 class App extends Component {
   state = {
@@ -20,7 +20,7 @@ GetLogin = () =>{
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">tag it easy</h1>
+          <div className="logo"> <img src={require("./img/logo.png")} /></div>
         </header>
         {/* <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
