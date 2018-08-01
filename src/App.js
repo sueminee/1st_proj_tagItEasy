@@ -1,31 +1,26 @@
 import React, { Component } from 'react';
-import './App.css';
-import Signup from './Tag1_sign-up';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './css/App.css';
 import './img/logo.png'
+// import Auth from './sign-form/01_auth';
+import Home from './main/01_home';
 
 class App extends Component {
-  state = {
-    id : '',
-    password : ''
-  }
-
-
-GetLogin = () =>{
-  const id = this.state.id;
-  const password = this.state.password;
-}
 
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <div className="logo"> <img src={require("./img/logo.png")} /></div>
+          <div className="logo"> <img src={require("./img/logo.png")} alt=""/></div>
         </header>
-        {/* <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p> */}
-        <Signup />
+        <Router>
+          <Switch>
+            {/* <Route exact path="/" component={Auth} /> */}
+            <Route exact path="/" component={Home} />
+            {/* <Route path="/home" component={Home}/> */}
+          </Switch>
+        </Router>
       </div>
     );
   }

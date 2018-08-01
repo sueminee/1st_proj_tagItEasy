@@ -63,7 +63,7 @@ h4 {
 
 label {
   text-transform: uppercase;
-  display: block;
+  display: inline-block;
   font-weight: bold;
   margin: 8px 6px 0 0;
   color: grey;
@@ -83,4 +83,21 @@ input {
 .logo img{
   margin: 12px 0 0 14px;
   width: 166px;
+}
+
+.search-form{
+  display: flex;
+  flex-direction: column;
+  height: 140px;
+  background-color: rgb(23, 73, 179);
+}
+
+.search-form label {
+  text-transform: uppercase;
+  display: inline-block;
+  font-weight: bold;
+  margin: 8px 6px 0 0;
+  color: white;
+  font-size: 0.7em;
+  margin: 12px 0 2px 0;
 }
