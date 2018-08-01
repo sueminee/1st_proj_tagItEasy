@@ -49,6 +49,7 @@ class Home extends Component {
     return (
       <div>
         <Search />
+        {/* <Links /> */}
         <Youtube videos={this.state.videos}/>
       </div>
     );
