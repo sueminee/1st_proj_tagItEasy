@@ -98,11 +98,15 @@ class Search extends Component {
       {console.log("안녕 i am in render", this.state)}
         <form  className="search-form" onSubmit={(e) => {this.submitNewURL(e)}}>
           <div className="search-left">
-            <div>
-              <label className="label-url">url</label>
-              <input className="input-url" type="text" name="url" placeholder="Copy URL and Paste it here!" onChange={this.urlChange}/>
-              <label className="label-url">description</label>
-              <input className="input-url" type="text" name="description" placeholder="Write description for this URL" onChange={this.desChange}/>
+            <div className="search-url">
+              <div>
+                <label className="label-url">url</label>
+                <input className="input-url" type="text" name="url" placeholder="Copy URL and Paste it here!" onChange={this.urlChange}/>
+              </div>
+              <div>
+                <label className="label-url">description</label>
+                <input className="input-url" type="text" name="description" placeholder="Write description for this URL" onChange={this.desChange}/>
+              </div>
             </div>
             <div className="tags">
               <label className="label-tag">tag</label>

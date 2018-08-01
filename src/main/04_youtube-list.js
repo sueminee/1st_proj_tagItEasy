@@ -5,7 +5,7 @@ class Youtube extends Component {
   render() {
     return (
       <div>
-        {this.props.videos.map(item => <YoutubeEntry video={item} /> )}
+        {/* {this.props.videos.map(item => <YoutubeEntry video={item} /> )} */}
       </div>
     );
   }
