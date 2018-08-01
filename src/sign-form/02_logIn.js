@@ -23,7 +23,7 @@ class Login extends Component {
     let email = this.state.user.email
     let password = this.state.user.password
 
-    fetch('https://jsonplaceholder.typicode.com/posts', {
+    fetch('http://localhost:3333/auth/login', {
         method : 'POST',
         headers: {
             'Accept' : 'application/JSON, text/plain, */*',

@@ -24,14 +24,18 @@ class Signup extends Component {
       let email = this.state.user.email
       let password = this.state.user.password
 
-      fetch('https://jsonplaceholder.typicode.com/posts', {
+      fetch('http://localhost:3333/auth/signup', {
           method : 'POST',
           headers: {
               'Accept' : 'application/JSON, text/plain, */*',
-              'Content-type' : 'application/json'},
-          body:JSON.stringify({username:username, email:email, password:password})
+              'Content-type' : 'application/json'
+          },
+          body: JSON.stringify({username:username, email:email, password:password})
       })
-      .then((res) => res.json())
+      .then((res) => { 
+        console.log('res is coming!!!', JSON.stringify(res)) 
+        res.json()
+      })
       .then((data) => console.log('Posted Sign-up data: ', data))
       .catch((err) => console.log('wtf Sign-up: ', err) )
 
