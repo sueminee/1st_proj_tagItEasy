@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 // import classNames from 'classnames'
 // import _ from 'lodash'
 
@@ -11,7 +11,8 @@ class Signup extends Component {
         email: "",
         password: "",
         confirmPassword: ""
-        }
+    },
+    goToLogin: false
   }
 
   _onSubmit = (event) => {
@@ -27,8 +28,8 @@ class Signup extends Component {
       fetch('http://localhost:3333/auth/signup', {
           method : 'POST',
           headers: {
-              'Accept' : 'application/JSON, text/plain, */*',
-              'Content-type' : 'application/json'
+              'Accept' : 'application/json, text/plain, */*',
+              'Content-Type' : 'application/json'
           },
           body: JSON.stringify({username:username, email:email, password:password})
       })
@@ -36,7 +37,10 @@ class Signup extends Component {
         console.log('res is coming!!!', JSON.stringify(res)) 
         res.json()
       })
-      .then((data) => console.log('Posted Sign-up data: ', data))
+      .then((data) => {
+        console.log('Posted Sign-up data: ', data)
+        this.setState({ goToLogin: true })
+      })
       .catch((err) => console.log('wtf Sign-up: ', err) )
 
       console.log("Form is submitted as: ","Signup", 'data:', user);
@@ -56,8 +60,11 @@ class Signup extends Component {
   }
 
 	render(){
-    console.log(this.state);
     const { user } = this.state;
+
+    if (this.state.goToLogin) {
+      return <Redirect to ='/auth/login'/>;
+    } 
 
     return (
       <div className="sign-form">
