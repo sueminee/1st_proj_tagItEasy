@@ -7,7 +7,7 @@ import Youtube from './04_youtube-list';
 class Home extends Component {
   state = {
     query : 'chopin',
-    videos : '',
+    videos : null,
   }
 
 
@@ -22,7 +22,7 @@ class Home extends Component {
       .then(data => {
         console.log(data);
         this.setState({
-          video: data.items
+          videos: data.items
         })
       })
       .catch(err => console.log(err));
@@ -39,7 +39,7 @@ class Home extends Component {
       .then(data => {
         this.setState({
           currentVideo: data.items[0],
-          video: data.items,
+          videos: data.items,
         })
       })
       .catch(err => console.log(err));
@@ -49,7 +49,12 @@ class Home extends Component {
     return (
       <div>
         <Search />
-        <Youtube videos={this.state.videos}/>
+        {this.state.videos === null ? <div>loading...</div> :
+        <div>
+          <div>
+            <Youtube videos={this.state.videos}/>
+          </div>
+        </div>}
       </div>
     );
   }
