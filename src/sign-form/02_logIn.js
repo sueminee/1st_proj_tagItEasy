@@ -67,6 +67,7 @@ class Login extends Component {
     
     if (this.state.hasToken) {
       console.log('토큰 있지~', this.state.hasToken);
+
       return <Redirect to ='/home'/>;
     } 
 
