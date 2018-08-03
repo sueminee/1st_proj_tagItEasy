@@ -179,8 +179,71 @@
 }
 
 h5 {
-    padding: 0;
-    margin: 0;
-    font-size: 0.8em;
-    color: rgb(159, 159, 159);
+  padding: 0;
+  margin: 0;
+  font-size: 0.8em;
+  color: rgb(159, 159, 159);
+}
+
+h4 {
+  padding: 0;
+  margin: 0;
+  background-color: darkorange;
+}
+
+.youtube {
+  /* background-color: palegoldenrod; */
+  width:80%;
+  margin: 0 auto;
+  padding-top: 1em; 
+}
+
+.youtube-inner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: rgba(181, 181, 181, 0.214);
+}
+
+.youtube-item {
+  background-color: white;
+  margin: 0.6em;
+  width: 30%;
+}
+
+.urls-form {
+  margin: 1em auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 28em;
+  height: 6em;
+  background-color: rgba(181, 181, 181, 0.214);
+  text-align: left;
+  border-radius: 0.1em;
+}
+.app-title, h2{
+  margin-top: 1.4em;
+  margin-bottom: 0;
+  font-size: 1em;
+}
+.link-title {
+  font-size: 1em;
+  font-weight: 700;
+  color: rgb(0, 0, 0);
+  margin: 0.4em 0 0 1.6em;
+}
+.link-url {
+  font-size: 0.9em;
+  color: rgb(23, 73, 179);
+  margin: 0em 0 0 1.8em;
+}
+.link-tags {
+  padding: 0.7em 1em;
+  background-color: rgb(71, 113, 196);
+  color: white;
+  font-weight: 500;
+  font-size: 0.7em;
+  border-radius: 0.2em;
+  margin: 0 0 0.1em 0;
 }

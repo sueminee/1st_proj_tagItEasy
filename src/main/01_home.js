@@ -1,43 +1,76 @@
 import React, { Component } from 'react';
+import '../img/logo.png'
 import Post from './02_post';
-import Youtube from './04_youtube-list';
 import Links from './03_links';
+import Youtube from './04_youtube-list';
+import { PassThrough } from 'stream';
 
 class Home extends Component {
   state = {
-    youtube : {
-      query : 'listz',
-      videos : null
-    },
-    // tags : ['poodle', 'samoyed', 'goldenretriever', 'goldenDoodle', 'corgi']
+    videos:null,
+    query:'',
     url:'',
     description:'',
     tagOne:'',
     tagTwo:'',
-    tagThree:''
+    tagThree:'',
+    tags: [],
+    tagsWithNum:[],
+    datas:[]
   }
 
   componentDidMount(){
-    this.getYoutubeData();
     this.getDBdata();
-    //get하는 함수 만들어서 그냥 여기서 실행.
-    //this.getDBdata(); 
-    // fetch(
-    //   //우리서버에 fetch
-    //   //토큰있는지 확인하고
-    //   //get요청
-    // )
+  }
+
+  getTagData = () => {
+    fetch('http://localhost:3333/urls/tags',{
+      method : 'GET',
+      headers: {
+        'Accept' : 'application/JSON, text/plain, */*',
+        'Content-type' : 'application/json',
+        'Authorization' : window.localStorage.token
+      },
+    })
+    .then(res => res.json())
+    .then(data => {
+      // console.log('####__이거슨 user의 모든 TAG들이다.__####', data)
+      const tagArr = Object.keys(data);
+      this.setState({tags: tagArr});
+
+      const tagsWithNum = [];
+      for(var i=0; i<tagArr.length; i++){
+        tagsWithNum.push(tagArr[i]+"("+ data[tagArr[i]]+")")
+      }
+      this.setState({tagsWithNum: tagsWithNum})
+    })
+    .catch(err => console.log("&&&&__getTagData 함수에서 GET요청 실패했다__&&&&", err))
   }
 
   getDBdata = () => {
-    fetch('http://localhost:3333/urls')
-    .then(response => console.log("handle HTTP response", response))
-    .catch(err => console.log("handle network error", err))
+    fetch('http://localhost:3333/urls/new',{
+      method : 'GET',
+      headers: {
+        'Accept' : 'application/JSON, text/plain, */*',
+        'Content-type' : 'application/json',
+        'Authorization' : window.localStorage.token
+      },
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log('@@@@@__getDBdata :이거슨 get해온 데이타다__@@@@@', data)
+      this.setState({
+        datas: data,
+        query: data[0].tag[0]
+      })
+      this.getYoutubeData(data[0].tag[0])
+      this.getTagData();
+    })
+    .catch(err => console.log("&&&&__getDBdata 함수에서 GET요청 실패했다__&&&&", err))
   }
 
-
-  getYoutubeData = () => {
-    const query = this.state.youtube.query;
+  getYoutubeData = (q) => {
+    const query = q;
     const key = 'AIzaSyB8mkBm4WoZ75Dz0C_ooMDwiTF3JwcdHas';
     const max = 3;
     fetch(
@@ -45,46 +78,22 @@ class Home extends Component {
     )
       .then(res => res.json())
       .then(data => {
-        this.setState({
-          youtube: {
-            query: query,
-            videos: data.items
-          }
-        })
-        console.log(this.state)
+        this.setState({videos: data.items})
+        // console.log("%%%%%__getYoutubeData에서 fetch 한 후 this.state 찍어보는중__%%%%%", this.state)
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log("@@@@@__getYoutubeData에서 fetch err__@@@@@", err));
   }
 
 
-  //################################____________search component 에 내려줄 함수들______________________###################################
-  urlChange = (e) => {
-    this.setState({url: e.target.value})
-    console.log('안녕', this.state);
-  }
-
-  desChange = (e) => {
-    this.setState({description: e.target.value})
-    console.log('안녕', this.state);
-  }
-
-  tag1Change = (e) => {
-    this.setState({tagOne: e.target.value})
-    console.log('안녕', this.state);
-  }
-
-  tag2Change = (e) => {
-    this.setState({tagTwo: e.target.value})
-    console.log('안녕', this.state);
-  }
-
-  tag3Change = (e) => {
-    this.setState({tagThree: e.target.value})
-    console.log('안녕', this.state);
-  }
+  //________________________search component 에 내려줄 함수들__________________________________
+  urlChange = (e) => {this.setState({url: e.target.value})}
+  desChange = (e) => {this.setState({description: e.target.value})}
+  tag1Change = (e) => {this.setState({tagOne: e.target.value})}
+  tag2Change = (e) => {this.setState({tagTwo: e.target.value})}
+  tag3Change = (e) => {this.setState({tagThree: e.target.value})}
 
   submitNewURL = (e) => {
-		e.preventDefault();
+		// e.preventDefault();
     let {url, description, tagOne, tagTwo, tagThree}  = this.state;
     let payload ={
       url: url,
@@ -94,11 +103,8 @@ class Home extends Component {
       tagThree: tagThree  
     }
 
-    //console.log(typeof window.localStorage, typeof window.localStorage.token, window.localStorage.token)
-
     fetch('http://localhost:3333/urls', {
       method : 'POST',
-      mode: 'cors',
 			headers: {
         'Accept' : 'application/json, text/plain, */*',
         'Access-Control-Allow-Origin': '*',
@@ -107,35 +113,52 @@ class Home extends Component {
 			},
 			body:JSON.stringify(payload)
 		})
-		.then((res) => {
-      //console.log('로컬', window.localStorage)
-      //console.log('레스',res)
-      return res.json()
-    })
-    .then((data) => console.log('data', data))
-    .catch(() => console.log('wtf'))
+		.then((res) => res.json())
+    .then((data) => console.log('$$$$$__submitNewURL하고 나서 response로 받는 data__$$$$$', data))
+    .catch((err) => console.log('$$$$$__submitNewURL__$$$$$', err))
+
+    this.getDBdata();
+    this.getYoutubeData();
   }
-  //####################################################################################
+  //______________________________________________________________________________________________________
+  
+  logout = (e) => {
+    e.preventDefault();
+    window.localStorage.removeItem('token');
+    this.props.history.push('/auth/login')
+  }
 
   render() {
-    //const{componentDidMount, getData, urlChange, desChange, tag1Change, tag2Change, tag3Change, submitNewURL} = this.props;
     return (
-      <div>
-        <Post urlChange={this.urlChange}
-              desChange={this.desChange}
-              tag1Change={this.tag1Change}
-              tag2Change={this.tag2Change}
-              tag3Change={this.tag3Change}
-              submitNewURL={this.submitNewURL} />
-        <div>
-          <Links />
-        </div>
-        {this.state.youtube.videos === null ? <div>loading...</div> :
-        <div>
-          <div>
-            <Youtube videos={this.state.youtube.videos}/>
+      <div className="App">
+        <header className="App-header">
+          <div className="logo">
+            <img src={require("../img/logo.png")} alt=""/>
           </div>
-        </div>}
+          <div>
+            <form onSubmit={(e) => {this.logout(e)}}>
+              <button className="logout-button">LogOut</button>
+            </form>
+          </div>
+        </header>
+        <div>
+          <Post urlChange={this.urlChange}
+                  desChange={this.desChange}
+                  tag1Change={this.tag1Change}
+                  tag2Change={this.tag2Change}
+                  tag3Change={this.tag3Change}
+                  submitNewURL={this.submitNewURL} />
+
+          <Links datas={this.state.datas} tags={this.state.tags} tagsWithNum={this.state.tagsWithNum}/>
+          
+          {this.state.videos === null ? <div>loading...</div> :
+          <div>
+            <div>
+              <Youtube query={this.state.query} videos={this.state.videos}/>
+            </div>
+          </div>}
+
+        </div>
       </div>
     );
   }

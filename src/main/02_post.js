@@ -4,8 +4,8 @@ class Post extends Component {
   render() {
     return (
       <div className="search-compo">
-      {console.log("안녕 i am in SEARCH render and this is this.state", this.state)}
-        <form  className="search-form" onSubmit={(e) => {this.submitNewURL(e)}}>
+      {console.log("안녕 i am in SEARCH render")}
+        <form  className="search-form" onSubmit={(e) => {this.props.submitNewURL(e)}}>
           <div className="search-left">
             <div className="search-url">
               <div>
