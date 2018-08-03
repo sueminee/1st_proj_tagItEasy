@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Post from './02_post';
 import Youtube from './04_youtube-list';
+import Links from './03_links';
 
 class Home extends Component {
   state = {
@@ -121,11 +122,14 @@ class Home extends Component {
     return (
       <div>
         <Post urlChange={this.urlChange}
-                desChange={this.desChange}
-                tag1Change={this.tag1Change}
-                tag2Change={this.tag2Change}
-                tag3Change={this.tag3Change}
-                submitNewURL={this.submitNewURL} />
+              desChange={this.desChange}
+              tag1Change={this.tag1Change}
+              tag2Change={this.tag2Change}
+              tag3Change={this.tag3Change}
+              submitNewURL={this.submitNewURL} />
+        <div>
+          <Links />
+        </div>
         {this.state.youtube.videos === null ? <div>loading...</div> :
         <div>
           <div>
