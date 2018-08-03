@@ -49,7 +49,7 @@ class Signup extends Component {
   _onTextFieldChange = (event) => {
 
       let { user } = this.state;
-      console.log('this.state: ', this.state);
+      //console.log('this.state: ', this.state);
 
       const fieldName = event.target.name;
       const fieldValue = event.target.value;
