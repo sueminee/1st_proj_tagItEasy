@@ -67,7 +67,8 @@ class Login extends Component {
     
     if (this.state.hasToken) {
       console.log('토큰 있지~', this.state.hasToken);
-      return <Redirect to ='/'/>;
+
+      return <Redirect to ='/home'/>;
     } 
 
     console.log('토큰 없다 ㅠㅠ', this.state.hasToken);
@@ -97,5 +98,4 @@ class Login extends Component {
     }
   //}
 };
-
 export default Login;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './css/App.css';
 import './img/logo.png'
 import Auth from './sign-form/01_auth';
@@ -16,7 +16,7 @@ class App extends Component {
         </header>
         <Router>
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route path="/home" component={Home} />
             {/* 토큰이 있는지 확인하고 Home 혹은 Login 화면에 랜더 */}
             <Route path="/auth" component={Auth}/>
           </Switch>
