@@ -2,5 +2,16 @@
 // http://mobicon.tistory.com/category/Git%2C%20GitHub    #git #github #개발 #Bootstrap #AngularJS
 // pinterest 처럼 예쁘게
 // 이 user가 쓰는 태그들 나열하기
+import React, { Component } from 'react';
 
+
+class Links extends Component {
+  state = {
+    url:'',
+    description:'',
+    tagOne:'',
+    tagTwo:'',
+    tagThree:''
+  }
+}
 
