@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import '../img/logo.png'
 import Post from './02_post';
+<<<<<<< HEAD
+import Links from './03_1_links';
+import Youtube from './04_1_youtube-list';
+=======
 import Links from './03_links';
 import Youtube from './04_youtube-list';
 import { PassThrough } from 'stream';
+>>>>>>> 8089a57799637adf48fa2912c4f5101c05d9f945
 
 class Home extends Component {
   state = {
@@ -24,7 +29,7 @@ class Home extends Component {
   }
 
   getTagData = () => {
-    fetch('http://localhost:3333/urls/tags',{
+    fetch('http://localhost:8080/urls/tags',{
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -34,7 +39,7 @@ class Home extends Component {
     })
     .then(res => res.json())
     .then(data => {
-      // console.log('####__이거슨 user의 모든 TAG들이다.__####', data)
+      // console.log('getTagData 에서 get해온 data: ', data)
       const tagArr = Object.keys(data);
       this.setState({tags: tagArr});
 
@@ -44,11 +49,11 @@ class Home extends Component {
       }
       this.setState({tagsWithNum: tagsWithNum})
     })
-    .catch(err => console.log("&&&&__getTagData 함수에서 GET요청 실패했다__&&&&", err))
+    .catch(err => console.log("getTagData 함수에서 GET요청 실패err : ", err))
   }
 
   getDBdata = () => {
-    fetch('http://localhost:3333/urls/new',{
+    fetch('http://localhost:8080/urls/new',{
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -58,7 +63,7 @@ class Home extends Component {
     })
     .then(res => res.json())
     .then(data => {
-      console.log('@@@@@__getDBdata :이거슨 get해온 데이타다__@@@@@', data)
+      console.log('getDBdata 함수에서 GET해온 data', data)
       this.setState({
         datas: data,
         query: data[0].tag[0]
@@ -66,7 +71,7 @@ class Home extends Component {
       this.getYoutubeData(data[0].tag[0])
       this.getTagData();
     })
-    .catch(err => console.log("&&&&__getDBdata 함수에서 GET요청 실패했다__&&&&", err))
+    .catch(err => console.log("getDBdata 함수에서 GET요청 실패했다", err))
   }
 
   getYoutubeData = (q) => {
@@ -79,13 +84,13 @@ class Home extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState({videos: data.items})
-        // console.log("%%%%%__getYoutubeData에서 fetch 한 후 this.state 찍어보는중__%%%%%", this.state)
+        // console.log("getYoutubeData 함수에서 fetch 후 this.state 찍으면 : ", this.state)
       })
-      .catch(err => console.log("@@@@@__getYoutubeData에서 fetch err__@@@@@", err));
+      .catch(err => console.log("getYoutubeData에서 fetch err : ", err));
   }
 
 
-  //________________________search component 에 내려줄 함수들__________________________________
+  //________________________Post component 에 내려줄 함수들__________________________________
   urlChange = (e) => {this.setState({url: e.target.value})}
   desChange = (e) => {this.setState({description: e.target.value})}
   tag1Change = (e) => {this.setState({tagOne: e.target.value})}
@@ -103,7 +108,7 @@ class Home extends Component {
       tagThree: tagThree  
     }
 
-    fetch('http://localhost:3333/urls', {
+    fetch('http://localhost:8080/urls', {
       method : 'POST',
 			headers: {
         'Accept' : 'application/json, text/plain, */*',
@@ -114,8 +119,8 @@ class Home extends Component {
 			body:JSON.stringify(payload)
 		})
 		.then((res) => res.json())
-    .then((data) => console.log('$$$$$__submitNewURL하고 나서 response로 받는 data__$$$$$', data))
-    .catch((err) => console.log('$$$$$__submitNewURL__$$$$$', err))
+    .then((data) => console.log('submitNewURL함수에서 POST 후 response로 받는 data : ', data))
+    .catch((err) => console.log('submitNewURL fetch err : ', err))
 
     this.getDBdata();
     this.getYoutubeData();
