@@ -70,6 +70,15 @@ class Login extends Component {
   
   render() {
 	  const { user } = this.state;
+<<<<<<< HEAD:src/sign-form/01_logIn.js
+=======
+    
+    if (this.state.hasToken) {
+      console.log('토큰 있지~', this.state.hasToken);
+
+      return <Redirect to ='/home'/>;
+    } 
+>>>>>>> 8089a57799637adf48fa2912c4f5101c05d9f945:src/sign-form/02_logIn.js
 
     if (this.state.hasToken) {
         console.log('토큰있어~', this.state.hasToken);
