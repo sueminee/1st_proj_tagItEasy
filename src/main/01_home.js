@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import '../img/logo.png'
 import Post from './02_post';
-<<<<<<< HEAD
 import Links from './03_1_links';
 import Youtube from './04_1_youtube-list';
-=======
-import Links from './03_links';
-import Youtube from './04_youtube-list';
-import { PassThrough } from 'stream';
->>>>>>> 8089a57799637adf48fa2912c4f5101c05d9f945
 
 class Home extends Component {
   state = {
