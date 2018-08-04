@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import YoutubeEntry from './05_youtube-entry';
-
+import YoutubeEntry from './04_2_youtube-entry'
 class Youtube extends Component {
   
   render() {

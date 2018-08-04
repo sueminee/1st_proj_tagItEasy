@@ -247,3 +247,20 @@ h4 {
   border-radius: 0.2em;
   margin: 0 0 0.1em 0;
 }
+
+.links-filter-list-inner {
+  margin: 1em auto;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  background-color: rgba(181, 181, 181, 0.214);
+  text-align: left;
+  border-radius: 0.1em;
+}
+
+.links-filter{
+  display: flex;
+  flex-direction: column;
+  margin: 0 2em 0 0;
+}
