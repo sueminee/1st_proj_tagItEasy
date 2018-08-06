@@ -16,7 +16,8 @@ class Home extends Component {
     tagThree:'',
     tags: [],
     tagsWithNum:[],
-    datas:[]
+    datas:[],
+    isEmpty: true
   }
 
   componentDidMount(){
@@ -24,7 +25,7 @@ class Home extends Component {
   }
 
   getTagData = () => {
-    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls/tags',{
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/api/urls/tags',{
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -48,7 +49,7 @@ class Home extends Component {
   }
 
   getDBdata = () => {
-    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com//urls/new',{
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/api/urls/new',{
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -61,7 +62,8 @@ class Home extends Component {
       console.log('getDBdata 함수에서 GET해온 data', data)
       this.setState({
         datas: data,
-        query: data[0].tag[0]
+        query: data[0].tag[0],
+        isEmpty: false
       })
       this.getYoutubeData(data[0].tag[0])
       this.getTagData();
@@ -103,7 +105,7 @@ class Home extends Component {
       tagThree: tagThree  
     }
 
-    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls', {
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/api/urls', {
       method : 'POST',
 			headers: {
         'Accept' : 'application/json, text/plain, */*',
@@ -114,7 +116,9 @@ class Home extends Component {
 			body:JSON.stringify(payload)
 		})
 		.then((res) => res.json())
-    .then((data) => console.log('submitNewURL함수에서 POST 후 response로 받는 data : ', data))
+    .then((data) => { 
+      console.log('submitNewURL함수에서 POST 후 response로 받는 data : ', data)
+    })
     .catch((err) => console.log('submitNewURL fetch err : ', err))
 
     this.getDBdata();
@@ -133,8 +137,7 @@ class Home extends Component {
     if (!window.localStorage.getItem('token')) {
       return <Redirect to ='/'/>;
     }
-    console.log('오 너 토큰있네~', this.state.hasToken);
-    
+        
     return (
       <div className="App">
         <header className="App-header">
@@ -149,18 +152,13 @@ class Home extends Component {
         </header>
         <div>
           <Post urlChange={this.urlChange}
-                  desChange={this.desChange}
-                  tag1Change={this.tag1Change}
-                  tag2Change={this.tag2Change}
-                  tag3Change={this.tag3Change}
-                  submitNewURL={this.submitNewURL} />
-          {this.state.query === '' ? <div className="ifEmpty">북마크하고 싶은 URL이 있다면, 위 파란박스 URL에 붙여넣기 해주세요!</div> : <div><Links datas={this.state.datas} tags={this.state.tags} tagsWithNum={this.state.tagsWithNum}/>
-          {this.state.videos === null ? <div>곧 로딩!</div> :
-          <div>
-            <div>
-              <Youtube query={this.state.query} videos={this.state.videos}/>
-            </div>
-          </div>}</div>}
+                desChange={this.desChange}
+                tag1Change={this.tag1Change}
+                tag2Change={this.tag2Change}
+                tag3Change={this.tag3Change}
+                submitNewURL={this.submitNewURL} />
+            {this.state.isEmpty ? <div className="isEmpty">북마크하고 싶은 URL이 있다면, 위 파란박스 URL에 붙여넣기 해주세요!</div> : <div><Links datas={this.state.datas} tags={this.state.tags} tagsWithNum={this.state.tagsWithNum}/></div>}
+            {this.state.videos === null ? <div>곧 로딩!</div> : <div><Youtube query={this.state.query} videos={this.state.videos}/></div>}
         </div>
       </div>
     );

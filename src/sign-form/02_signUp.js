@@ -26,7 +26,7 @@ class Signup extends Component {
       let email = this.state.user.email
       let password = this.state.user.password
 
-      fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/signup', {
+      fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/api/signup', {
           method : 'POST',
           headers: {
               'Accept' : 'application/json, text/plain, */*',
@@ -95,7 +95,7 @@ class Signup extends Component {
                     <input value={user.confirmPassword} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="비밀번호 확인" id="confirm-password-id" type="password" name="confirmPassword" />
                 </div>
               </div>
-              {this.state.message !== '' ? <div className="app-message">{this.state.message}</div> : null}
+              {this.state.message !== "" ? <div className="app-message">{this.state.message}</div> : null}
               <div className="form-actions"> 
                 <button className="app-button">Sign Up</button>
                 <div className="form-description">
