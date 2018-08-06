@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import '../img/logo.png'
 import Post from './02_post';
 import Links from './03_1_links';
@@ -128,8 +129,13 @@ class Home extends Component {
   }
 
   render() {
+
+    if (!window.localStorage.getItem('token')) {
+      return <Redirect to ='/'/>;
+    }
+    console.log('오 너 토큰있네~', this.state.hasToken);
+    
     return (
-      
       <div className="App">
         <header className="App-header">
           <div className="logo">
