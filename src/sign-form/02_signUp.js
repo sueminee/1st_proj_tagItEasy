@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom';
-// import { Alert } from 'react-alert'
+// import classNames from 'classNames';
 import '../img/logo.png';
 
 class Signup extends Component {
@@ -26,7 +26,7 @@ class Signup extends Component {
       let email = this.state.user.email
       let password = this.state.user.password
 
-      fetch('http://localhost:8080/signup', {
+      fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/api/signup', {
           method : 'POST',
           headers: {
               'Accept' : 'application/json, text/plain, */*',
@@ -35,14 +35,14 @@ class Signup extends Component {
           body: JSON.stringify({username:username, email:email, password:password})
       })
       .then((res) => { 
-        console.log('res is coming!!!', JSON.stringify(res)) 
-        res.json()
+        // console.log('res is coming!!!', JSON.stringify(res)) 
+        return res.json()
       })
       .then((data) => {
-        console.log('Posted Sign-up data: ', data)
+        console.log('서버로부터의 메세지: ', data.message)
         this.setState({ 
           goToLogin: true,
-          //message: data.message
+          message: data.message
         })
       })
       .catch((err) => console.log('wtf Sign-up: ', err) )
@@ -74,26 +74,28 @@ class Signup extends Component {
           </div>
         </header>
         <div className="sign-form">
-        {this.state.message !== '' ? <div className="">{alert(this.state.message)}</div> : null}
           <div>
             <h2 className="form-title">Sign Up</h2>        
-            <form onSubmit={(s) => {this._onSubmit(s)}}>  
-              <div className='form-item'>
-                <label htmlFor="name-id">username</label>
-                <input value={user.username} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="Your username" id="username-id" type="text" name="username" />
+            <form onSubmit={(s) => {this._onSubmit(s)}}>
+              <div>
+                <div className='form-item'>
+                  <label htmlFor="name-id">username</label>
+                  <input value={user.username} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="이름" id="username-id" type="text" name="username" />
+                </div>
+                <div className='form-item'>
+                  <label htmlFor="email-id">Email</label>
+                  <input value={user.email} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="이메일 주소" id="email-id" type="email" name="email" />
+                </div>
+                <div className='form-item'>
+                  <label htmlFor="password-id">Password</label>
+                  <input value={user.password} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="비밀번호" id="password-id" type="password" name="password" />
+                </div>
+                <div className='form-item'>
+                    {/* <label htmlFor="confirm-password-id">Confirm Password</label> */}
+                    <input value={user.confirmPassword} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="비밀번호 확인" id="confirm-password-id" type="password" name="confirmPassword" />
+                </div>
               </div>
-              <div className='form-item'>
-                <label htmlFor="email-id">Email</label>
-                <input value={user.email} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="Your email address" id="email-id" type="email" name="email" />
-              </div>
-              <div className='form-item'>
-                <label htmlFor="password-id">Password</label>
-                <input value={user.password} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="Your password" id="password-id" type="password" name="password" />
-              </div>
-              <div className='form-item'>
-                  <label htmlFor="confirm-password-id">Confirm Password</label>
-                  <input value={user.confirmPassword} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="Confirm password" id="confirm-password-id" type="password" name="confirmPassword" />
-              </div>
+              {this.state.message !== "" ? <div className="app-message">{this.state.message}</div> : null}
               <div className="form-actions"> 
                 <button className="app-button">Sign Up</button>
                 <div className="form-description">
