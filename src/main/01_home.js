@@ -25,7 +25,7 @@ class Home extends Component {
   }
 
   getTagData = () => {
-    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls/tags',{
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/api/urls/tags',{
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -49,7 +49,7 @@ class Home extends Component {
   }
 
   getDBdata = () => {
-    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls/new',{
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/api/urls/new',{
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -105,7 +105,7 @@ class Home extends Component {
       tagThree: tagThree  
     }
 
-    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls', {
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/api/urls', {
       method : 'POST',
 			headers: {
         'Accept' : 'application/json, text/plain, */*',
