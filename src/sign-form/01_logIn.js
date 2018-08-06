@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom';
-// import { Alert } from 'react-alert'
+// import classNames from 'classNames';
 import '../img/logo.png';
 
 class Login extends Component {
@@ -25,7 +25,7 @@ class Login extends Component {
     let email = this.state.user.email
     let password = this.state.user.password
 
-    fetch('http://localhost:8080/', {
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/', {
         method : 'POST',
         headers: {
             'Accept' : 'application/json, text/plain, */*',
@@ -36,7 +36,7 @@ class Login extends Component {
       return res.json();
     })
     .then((data) => {
-        console.log('서버로부터의 메세지: ', data)
+        console.log('서버로부터의 메세지: ', data.message)
         // save it into user's local storage
         if (data.token) {
           window.localStorage.setItem('token', data.token)
@@ -72,9 +72,7 @@ class Login extends Component {
 	  const { user } = this.state;
 
     if (this.state.hasToken) {
-        console.log('토큰있어~', this.state.hasToken);
-        return <Redirect to ='/urls'/>;
-    } else if (window.localStorage.getItem('token') && window.localStorage.getItem('token') !== undefined) {
+        console.log('오 너 토큰있네~', this.state.hasToken);
         return <Redirect to ='/urls'/>;
     }
     
@@ -87,18 +85,20 @@ class Login extends Component {
           </div>
         </header>
         <div className="sign-form">
-        {this.state.message !== '' ? <div className="">{alert(this.state.message)}</div> : null}
           <div>
             <h2 className="form-title">Log In</h2>
             <form onSubmit={(event) => {this._onSubmit(event)}}>
-              <div className='form-item'>
-                <label htmlFor="email-id">email</label>
-                <input value={user.email} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="Your email address" id="email-id" type="email" name="email" />
+              <div>
+                <div className='form-item'>
+                  <label htmlFor="email-id">email</label>
+                  <input value={user.email} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="이메일" id="email-id" type="email" name="email" />
+                </div>
+                <div className='form-item'>
+                  <label htmlFor="password-id">password</label>
+                  <input value={user.password} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="비밀번호" id="password-id" type="password" name="password" />
+                </div>
               </div>
-              <div className='form-item'>
-                <label htmlFor="password-id">password</label>
-                <input value={user.password} onChange={(e) => {this._onTextFieldChange(e)}} placeholder="Your password" id="password-id" type="password" name="password" />
-              </div>
+              {this.state.message !== '' ? <div className="app-message">{this.state.message}</div> : null}
               <div className="form-actions">
                 <button className="app-button">Log In</button>
                 <div className="form-description">
