@@ -75,8 +75,8 @@ class Login extends Component {
         console.log('오 너 토큰있네~', this.state.hasToken);
         return <Redirect to ='/urls'/>;
     }
-    
     console.log('너의 토큰을 살펴봐도 될까?', this.state.hasToken);
+    
     return (
       <div className="App">
         <header className="App-header">
