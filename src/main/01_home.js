@@ -23,7 +23,7 @@ class Home extends Component {
   }
 
   getTagData = () => {
-    fetch('http://localhost:8080/urls/tags',{
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls/tags',{
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -47,7 +47,7 @@ class Home extends Component {
   }
 
   getDBdata = () => {
-    fetch('http://localhost:8080/urls/new',{
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com//urls/new',{
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -102,7 +102,7 @@ class Home extends Component {
       tagThree: tagThree  
     }
 
-    fetch('http://localhost:8080/urls', {
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls', {
       method : 'POST',
 			headers: {
         'Accept' : 'application/json, text/plain, */*',
@@ -124,11 +124,12 @@ class Home extends Component {
   logout = (e) => {
     e.preventDefault();
     window.localStorage.removeItem('token');
-    this.props.history.push('/auth/login')
+    this.props.history.push('/')
   }
 
   render() {
     return (
+      
       <div className="App">
         <header className="App-header">
           <div className="logo">
@@ -147,16 +148,13 @@ class Home extends Component {
                   tag2Change={this.tag2Change}
                   tag3Change={this.tag3Change}
                   submitNewURL={this.submitNewURL} />
-
-          <Links datas={this.state.datas} tags={this.state.tags} tagsWithNum={this.state.tagsWithNum}/>
-          
-          {this.state.videos === null ? <div>loading...</div> :
+          {this.state.query === '' ? <div className="ifEmpty">북마크하고 싶은 URL이 있다면, 위 파란박스 URL에 붙여넣기 해주세요!</div> : <div><Links datas={this.state.datas} tags={this.state.tags} tagsWithNum={this.state.tagsWithNum}/>
+          {this.state.videos === null ? <div>곧 로딩!</div> :
           <div>
             <div>
               <Youtube query={this.state.query} videos={this.state.videos}/>
             </div>
-          </div>}
-
+          </div>}</div>}
         </div>
       </div>
     );

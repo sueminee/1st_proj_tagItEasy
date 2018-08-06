@@ -21,13 +21,13 @@ class Links extends Component {
             </div>
             <div>
               {/* {this.props.tagsWithNum.map(tagN =><label><input type="checkbox" name="tag" value={tagN} />{tagN}</label>)} */}
-              {this.props.tagsWithNum.map(tagN => <LinksFilter tagN={tagN} />)}
+              {this.props.tagsWithNum.map((tagN, index) => <LinksFilter tagN={tagN} key={index}/>)}
             </div>
           </div>
 
           <div className="links-list">
-            {console.log("@#@#@#__Links 안에 this.props.datas 찍는중__@#@#@#", this.props.datas)}
-            {this.props.datas.map((data, key) => <LinksEntry data={data} key={key}/>)}
+            {/* {console.log("@#@#@#__Links 안에 this.props.datas 찍는중__@#@#@#", this.props.datas)} */}
+            {this.props.datas.map((data, index) => <LinksEntry data={data} key={index}/>)}
           </div>
         </div> 
       </div>
