@@ -1,6 +1,9 @@
 * {
   font-family: 'Nanum Gothic', sans-serif;
 }
+html {
+  width: 100%;
+}
 
 .App {
   text-align: center;
@@ -99,7 +102,7 @@
 .app-button-white {
   width: 5em;
   height: 5em;
-  border: rgb(255, 88, 0);
+  border:rgb(255, 174, 0);
   border-radius: 2px;
   background-color:rgb(255, 174, 0);
   font-size: 1em;
@@ -207,7 +210,6 @@ h5 {
 }
 
 .youtube {
-  /* background-color: palegoldenrod; */
   width:80%;
   margin: 0 auto;
   padding-top: 1em; 
@@ -222,29 +224,18 @@ h5 {
 }
 
 .youtube-item {
-  /* background-color: white; */
   margin: 0.6em;
   width: 30%;
-}
-
-.urls-form {
-  margin: 1em auto 0 auto;
-  width: 28em;
-  height: 6em;
-  background-color: rgb(255, 255, 255);
-  text-align: left;
-  border-radius: 0.1em;
-}
-
-.link-list {
-  display: flex;
-  flex-direction: column;
 }
 
 .app-title, h2{
   margin-top: 1.4em;
   margin-bottom: 0;
   font-size: 1em;
+}
+
+.links-filter {
+  height: 36em;
 }
 
 .links-filter-list-inner {
@@ -259,52 +250,54 @@ h5 {
 }
 
 .radio {
-  background-color: rgba(92, 124, 193, 0.3);
+  background-color: rgb(23, 73, 179);
   text-align: center;
   font-size: 0.8em;
-  font-weight: 600;
-  padding: 0.6em;
+  font-weight: 400;
+  color: white;
+  padding: 0.9em;
 }
 
 .tags-list {
-  font-size: 0.8em;
+  font-size: 0.7em;
   align-self: flex-start;
   overflow: scroll;
-  width: 14em;
-  height: 38em;
+  width: 15em;
+  height: 43.4em;
   background-color: rgb(255, 255, 255);
 }
 
 .tags-list div {
-  padding: 0.52em 0 0 1em;
+  padding: 0.55em 0 0 0.8em;
 }
 
 .filter-button {
-  background-color: rgba(92, 124, 193, 0.3);
+  background-color:rgba(208, 208, 208, 0.6);
   text-align: center;
-  padding: 0.6em;
-  margin: 0em 0 0.8em 0;
+  padding: 0.7em;
 }
 
 .apply-check-btn {
   font-size: 0.7em;
   padding: 0.6em 2.6em;
-  color: white;
-  font-weight: 400;
+  color: rgb(255, 255, 255);
+  font-weight: 700;
   border-radius: 0.1em;
   text-align: center;
-  background-color:rgb(255, 174, 0);
+  border: none;
+  background-color: rgb(23, 73, 179);
 }
 
 .clear-check-btn {
   font-size: 0.7em;
   padding: 0.6em 0.7em;
-  color: rgba(128, 128, 128, 0.6);
+  color: rgb(198, 197, 197);
   font-weight: 400;
   border-radius: 0.1em;
   margin-right: 0.4em;
   text-align: center;
-  background-color:rgb(242, 242, 242);
+  border: none;
+  background-color:rgb(255, 255, 255);
 }
 
 .url-delete img {
@@ -312,13 +305,12 @@ h5 {
   float: right;
   margin: 0.6em 0.6em 0 0;
   cursor: pointer;
-  z-index: 2em;
 }
 
 .link-title {
   clear: both;
   font-size: 0.9em;
-  font-weight: 600;
+  font-weight: 700;
   color: rgb(0, 0, 0);
   margin: 1.2em 0 0 1.4em;
   display: inline-block;
@@ -327,26 +319,32 @@ h5 {
 
 .link-url {
   font-size: 0.8em;
-  font-weight: 700;
-  color: rgb(23, 73, 179);
+  font-weight: 400;
+  color: rgb(162, 162, 162);
   margin: 0em 0 0 1.6em;
   display: inline-block;
   cursor: pointer;
 }
 
+.link-list {
+  display: flex;
+  flex-direction: column;
+}
+
 .tags-form {
   display: flex;
   flex-direction: row;
-  margin: 0.6em 0 0.1em 0;
+  margin: 0.5em 0 0 0;
 }
 
-.link-tags {
-  padding: 0.75em 1em 0.75em 1em;
-  background-color: rgb(23, 73, 179);
-  color: white;
-  font-size: 0.8em;
-  border-radius: 0.2em;
-  margin: 0 0.4em 0.1em 0;
+.urls-form {
+  margin: 1em auto 0 auto;
+  width: 28em;
+  height: 6em;
+  background-color: rgb(255, 255, 255);
+  text-align: left;
+  border-radius: 0.1em;
+  padding: 0 0 0.6em 0;
 }
 
 .links-list {
@@ -357,6 +355,16 @@ h5 {
   height: 36em;
   margin: 1em 0;
   background-color: rgba(255, 255, 255, 0.37);
+}
+
+.link-tags {
+  padding: 0.6em 1em 0.6em 1em;
+  border: 0.1em solid rgb(23, 73, 179);
+  color: rgb(23, 73, 179);
+  font-size: 0.7em;
+  font-weight: 700;
+  border-radius: 0.1em;
+  margin: 0 0 0 1.2em;
 }
 
 .isEmpty {
