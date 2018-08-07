@@ -14,9 +14,10 @@ class Home extends Component {
     tagOne:'',
     tagTwo:'',
     tagThree:'',
-    tags: [],
     tagsWithNum:[],
     datas:[],
+    sortBy: 'new',
+    selectedItem: [],
     isEmpty: true
   }
 
@@ -38,7 +39,7 @@ class Home extends Component {
     .then(data => {
       // console.log('getTagData 에서 get해온 data: ', data)
       const tagArr = Object.keys(data);
-      this.setState({tags: tagArr});
+      tagArr.sort()
 
       const tagsWithNum = [];
       for(var i=0; i<tagArr.length; i++){
@@ -90,14 +91,14 @@ class Home extends Component {
 
 
   //________________________Post component 에 내려줄 함수들__________________________________
-  urlChange = (e) => {this.setState({url: e.target.value})}
-  desChange = (e) => {this.setState({description: e.target.value})}
-  tag1Change = (e) => {this.setState({tagOne: e.target.value})}
-  tag2Change = (e) => {this.setState({tagTwo: e.target.value})}
-  tag3Change = (e) => {this.setState({tagThree: e.target.value})}
+  urlChange = (e) => {this.setState({url: e.target.value.trim()})}
+  desChange = (e) => {this.setState({description: e.target.value.trim()})}
+  tag1Change = (e) => {this.setState({tagOne: e.target.value.trim()})}
+  tag2Change = (e) => {this.setState({tagTwo: e.target.value.trim()})}
+  tag3Change = (e) => {this.setState({tagThree: e.target.value.trim()})}
 
   submitNewURL = (e) => {
-		// e.preventDefault();
+    // e.preventDefault();
     let {url, description, tagOne, tagTwo, tagThree}  = this.state;
     let payload ={
       url: url,
@@ -135,6 +136,54 @@ class Home extends Component {
     this.props.history.push('/')
   }
 
+  getFilteredData =(e) =>{
+    e.preventDefault();
+    let query = `http://localhost:8080/urls/new`
+    if(this.state.selectedItem.length > 0){
+      query =`http://localhost:8080/urls/${this.state.sortBy}/tags?array=${JSON.stringify(this.state.selectedItem)}`
+    } else{
+      query =`http://localhost:8080/urls/${this.state.sortBy}`
+    }
+    console.log("getFilteredData 함수 fetch전 query", query)
+    fetch(query, {
+      method : 'GET',
+      headers: {
+        'Accept' : 'application/JSON, text/plain, */*',
+        'Content-type' : 'application/json',
+        'Authorization' : window.localStorage.token
+      },
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log('getFilteredData 함수에서 GET해온 data', data)
+      this.setState({datas: data})
+    })
+    .catch(err => console.log("getDBdata 함수에서 GET요청 실패했다", err))
+  }
+
+  handleCheckboxChange = (e) => {
+  const checkedArr = this.state.selectedItem;
+    if(e.target.checked){
+      const value = e.target.value;
+      const endIndex = value.indexOf("(");
+      const slicedValue = value.slice(0, endIndex);
+      checkedArr.push(slicedValue);
+    }
+    else if(e.target.type==="checkbox") {
+      const unCheckedIndex = checkedArr.indexOf(e.target.value);
+      checkedArr.splice(unCheckedIndex, 1); 
+    }
+
+    this.setState({selectedItem: checkedArr})
+    
+    console.log("handleCheckboxChange 에서 this.state: ", this.state)
+  }
+
+  handleRadioChange = (e) => {
+    this.setState({sortBy: e.target.value})
+    console.log("handleRadioChange에서 state 찍는중: ", this.state)
+  }
+
   render() {
 
     if (!window.localStorage.getItem('token')) {
@@ -160,7 +209,14 @@ class Home extends Component {
                 tag2Change={this.tag2Change}
                 tag3Change={this.tag3Change}
                 submitNewURL={this.submitNewURL} />
-            {this.state.isEmpty ? <div className="isEmpty">북마크하고 싶은 URL이 있다면, 위 파란박스 URL에 붙여넣기 해주세요!</div> : <div><Links datas={this.state.datas} tags={this.state.tags} tagsWithNum={this.state.tagsWithNum}/></div>}
+            {this.state.isEmpty ? <div className="isEmpty">북마크하고 싶은 URL이 있다면, 위 파란박스 URL에 붙여넣기 해주세요!</div> : <Links datas={this.state.datas}
+                tags={this.state.tags}
+                tagsWithNum={this.state.tagsWithNum}
+                sortBy={this.state.sortBy}
+                selectedItem={this.state.selectedItem}
+                getFilteredData={this.getFilteredData} 
+                handleCheckboxChange={this.handleCheckboxChange} 
+                handleRadioChange={this.handleRadioChange} /></div>}
             {this.state.videos === null ? <div>곧 로딩!</div> : <div><Youtube query={this.state.query} videos={this.state.videos}/></div>}
         </div>
       </div>
