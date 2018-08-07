@@ -114,11 +114,14 @@ class Home extends Component {
 			body:JSON.stringify(payload)
 		})
 		.then((res) => res.json())
-    .then((data) => console.log('submitNewURL함수에서 POST 후 response로 받는 data : ', data))
+    .then((data) => {
+      // console.log('submitNewURL함수에서 POST 후 response로 받는 data : ', data)
+      this.getDBdata();
+      this.getYoutubeData();
+    })
     .catch((err) => console.log('submitNewURL fetch err : ', err))
 
-    this.getDBdata();
-    this.getYoutubeData();
+
   }
   //______________________________________________________________________________________________________
   
@@ -204,7 +207,8 @@ class Home extends Component {
                 selectedItem={this.state.selectedItem}
                 getFilteredData={this.getFilteredData} 
                 handleCheckboxChange={this.handleCheckboxChange} 
-                handleRadioChange={this.handleRadioChange} />
+                handleRadioChange={this.handleRadioChange}
+                getDBdata={this.getDBdata} />
           
           {this.state.videos === null ? <div>loading...</div> :
           <div>

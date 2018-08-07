@@ -28,7 +28,7 @@ class Links extends Component {
 
           <div className="links-list">
             {/* {console.log("@#@#@#__Links 안에 this.props.datas 찍는중__@#@#@#", this.props.datas)} */}
-            {this.props.datas.map((data, key) => <LinksEntry data={data} key={key}/>)}
+            {this.props.datas.map((data, key) => <LinksEntry data={data} key={key} getDBdata={this.props.getDBdata}/>)}
           </div>
         </div> 
       </div>
