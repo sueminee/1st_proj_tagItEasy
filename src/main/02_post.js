@@ -4,15 +4,10 @@ class Post extends Component {
   render() {
     return (
       <div className="search-compo">
-
       {/* {console.log("안녕 i am in post render")} */}
         <form  className="search-form" onSubmit={(e) => {this.props.submitNewURL(e)}}>
-
-//         <form  className="search-form" onSubmit={(e) => {
-//           e.preventDefault();
-//           this.props.submitNewURL(e);
-//           }}>
-
+           {/* e.preventDefault();
+           this.props.submitNewURL(e); */}
           <div className="search-left">
             <div className="search-url">
               <div>
@@ -31,10 +26,8 @@ class Post extends Component {
               <input className="input-tag" type="text" name="tag3" placeholder="태그이름 짓기" onChange={this.props.tag3Change}/>
             </div>
           </div>
-    
           {/* <div> {this.state.tags.map(tag =><label><input type="checkbox" name="tag" value={tag} />{tag}</label>)}</div> */}
           <div><button className="app-button-white">저장</button></div>
-          
         </form>
       </div>
     );
@@ -42,7 +35,6 @@ class Post extends Component {
 }
 
 export default Post;
-
 
   //  링크 input 
   //  링크 디스크립션
