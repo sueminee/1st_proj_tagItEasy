@@ -36,7 +36,6 @@ class Post extends Component {
 
 export default Post;
 
-
   //  링크 input 
   //  링크 디스크립션
   //  신규 태그 input : https://www.npmjs.com/package/react-multivalue-text-input

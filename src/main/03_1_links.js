@@ -9,25 +9,24 @@ class Links extends Component {
     return (
       <div className="links-filter-list-inner">
         <div className="links-filter">
-            {/* {this.props.tags.map(tag =><label><input type="checkbox" name="tag" value={tag} />{tag}</label>)} */}
             <form onSubmit={(e) => this.props.getFilteredData(e)}>
               <div className="radio">
                 <label><input type="radio" name="sort" value="new" onClick={this.props.handleRadioChange} />최신순</label>
                 <label><input type="radio" name="sort" value="popular" onClick={this.props.handleRadioChange} />인기순</label>
               </div>
               <div className="tags-list">
-                {/* {this.props.tagsWithNum.map(tagN =><label><input type="checkbox" name="tag" value={tagN} />{tagN}</label>)} */}
-                {this.props.tagsWithNum.map(tagN => <LinksFilter tagN={tagN} handleCheckboxChange={this.props.handleCheckboxChange}/>)}
+                {/* {console.log(this.props.tagsWithNum)} */}
+                {this.props.tagsWithNum.map((tagN, index) => <LinksFilter tagN={tagN} key={index} handleCheckboxChange={this.props.handleCheckboxChange}/>)}
               </div>
               <div className="filter-button"> 
-                <button className="clear-check-btn">체크해체</button>
+                <button className="clear-check-btn">체크해제</button>
                 <button className="apply-check-btn">적용</button>
               </div>
             </form>
           </div>
           <div className="links-list">
             {/* {console.log("@#@#@#__Links 안에 this.props.datas 찍는중__@#@#@#", this.props.datas)} */}
-            {this.props.datas.map((data, index) => <LinksEntry data={data} key={index} getDBdata={this.props.getDBdata}/>)}
+            {this.props.datas.map((data) => <LinksEntry data={data} key={data._id} getDBdata={this.props.getDBdata} getFilteredData={this.props.getFilteredData} />)}
           </div>
       </div>
     );

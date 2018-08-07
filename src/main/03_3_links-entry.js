@@ -1,4 +1,5 @@
 import React from 'react';
+import '../img/03_delete.png'
 // import '../img/delete';
 
 const LinksEntry = (props) => {
@@ -55,8 +56,9 @@ const LinksEntry = (props) => {
     <div className="urls-form">
       <div className="link-list" >
         <div>
-          <div className="url-delete" onClick={() => {delUrl(props.data)}} > <img src="https://blogfiles.pstatic.net/MjAxODA4MDdfMTc2/MDAxNTMzNjEzMjUxNDIz.DOpQN61hNGZ1erYTaYdFVsAd4L7Kv4sDQXNKFJCQkN4g.H1gSaGXlWykldwDBLJHUGeZI2vqM7hF5vOrDNbfvtawg.PNG.cloncat/03_delete.png" alt=""/></div>
-          <div className="link-title" onClick={() => {clickCounter(props.data)}}>{props.data.description}{props.data.id}</div>
+          <div className="url-delete" ><img src={require("../img/03_delete.png")} alt=""/></div>
+          {/* <button className="url-delete" onClick={() => {delUrl(props.data)}}>삭제</button> */}
+          <div className="link-title" onClick={() => {clickCounter(props.data)}}>{props.data.description}</div>
         </div>
         <div className="link-url" onClick={() => {clickCounter(props.data)}}>{props.data.url}</div>
       </div>

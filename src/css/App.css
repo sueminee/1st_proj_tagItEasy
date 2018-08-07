@@ -244,7 +244,7 @@ h5 {
   align-items: center;
   width: 100%;
   justify-content: center;
-  background-color: rgba(181, 181, 181, 0.214);
+  background-color: #eef;
   text-align: left;
   border-radius: 0.1em;
 }
@@ -272,7 +272,7 @@ h5 {
 }
 
 .filter-button {
-  background-color:rgba(208, 208, 208, 0.6);
+  background-color: #bbc;
   text-align: center;
   padding: 0.7em;
 }
