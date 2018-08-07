@@ -27,6 +27,7 @@ class Signup extends Component {
       let password = this.state.user.password
 
       fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/signup', {
+      // fetch('api/signup', {
           method : 'POST',
           headers: {
               'Accept' : 'application/json, text/plain, */*',
@@ -40,10 +41,16 @@ class Signup extends Component {
       })
       .then((data) => {
         console.log('서버로부터의 메세지: ', data.message)
-        this.setState({ 
-          goToLogin: true,
-          message: data.message
-        })
+        if (data.message.includes('Wrong') || data.message.includes('error')) {
+          this.setState({ 
+            message: data.message
+          })
+        } else {
+          this.setState({ 
+            goToLogin: true
+          })
+        }
+        
       })
       .catch((err) => console.log('wtf Sign-up: ', err) )
 
