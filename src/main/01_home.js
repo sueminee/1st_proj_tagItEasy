@@ -25,7 +25,7 @@ class Home extends Component {
   }
 
   getTagData = () => {
-    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/api/urls/tags',{
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls/tags',{
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -49,7 +49,7 @@ class Home extends Component {
   }
 
   getDBdata = () => {
-    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/api/urls/new',{
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls/new',{
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -105,7 +105,7 @@ class Home extends Component {
       tagThree: tagThree  
     }
 
-    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/api/urls', {
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls', {
       method : 'POST',
 			headers: {
         'Accept' : 'application/json, text/plain, */*',
@@ -140,8 +140,8 @@ class Home extends Component {
         
     return (
       <div className="App">
-        <header className="App-header">
-          <div className="logo">
+        <header className="App-header-home">
+          <div className="logo-home">
             <img src={require("../img/logo.png")} alt=""/>
           </div>
           <div>
