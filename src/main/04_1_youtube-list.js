@@ -5,7 +5,7 @@ class Youtube extends Component {
   render() {
     // console.log('@@@@__youtybelist가 받는 프롭스__@@@@@', this.props.videos)
     return (
-      <div className="app-title"><h2>가장 핫한 당신의 태그 #{this.props.query}</h2>
+      <div className="app-title"><h2>당신의 최근 관심, #{this.props.query}</h2>
         <div className="youtube">
           <div className="youtube-inner">
             {/* {console.log(this.props)} */}

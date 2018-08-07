@@ -25,7 +25,8 @@ class Login extends Component {
     let email = this.state.user.email
     let password = this.state.user.password
 
-    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/api/', {
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/', {
+    // fetch('api/', {
         method : 'POST',
         headers: {
             'Accept' : 'application/json, text/plain, */*',

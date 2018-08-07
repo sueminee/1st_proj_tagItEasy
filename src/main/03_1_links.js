@@ -7,40 +7,35 @@ class Links extends Component {
 
   render() {
     return (
-      <div className="links-filter-list">
-        <div className="links-filter-list-inner">
-          <div className="links-filter">
+      <div className="links-filter-list-inner">
+        <div className="links-filter">
             {/* {this.props.tags.map(tag =><label><input type="checkbox" name="tag" value={tag} />{tag}</label>)} */}
             <form onSubmit={(e) => this.props.getFilteredData(e)}>
               <div className="radio">
                 <label><input type="radio" name="sort" value="new" onClick={this.props.handleRadioChange} />최신순</label>
                 <label><input type="radio" name="sort" value="popular" onClick={this.props.handleRadioChange} />인기순</label>
               </div>
-              <div className="need-scroll">
+              <div className="tags-list">
                 {/* {this.props.tagsWithNum.map(tagN =><label><input type="checkbox" name="tag" value={tagN} />{tagN}</label>)} */}
                 {this.props.tagsWithNum.map(tagN => <LinksFilter tagN={tagN} handleCheckboxChange={this.props.handleCheckboxChange}/>)}
               </div>
-              <div>
-                <button type="submit">적용</button>
+              <div className="filter-button"> 
+                <button className="clear-check-btn">체크해체</button>
+                <button className="apply-check-btn">적용</button>
               </div>
             </form>
           </div>
-
           <div className="links-list">
             {/* {console.log("@#@#@#__Links 안에 this.props.datas 찍는중__@#@#@#", this.props.datas)} */}
              {this.props.datas.map((data, index) => <LinksEntry data={data} key={index}/>)}
-
           </div>
-        </div> 
+          <div className="links-list">
+            {/* {console.log("Links의 datas: ", this.props.datas)} */}
+            {this.props.datas.map((data, index) => <LinksEntry data={data} key={index}/>)}
+          </div>
       </div>
     );
   }
 }
 
 export default Links;
-
-
-//  링크 - 태그 list (최신추가 가 맨 위로 오게 해서 max 몇개 혹은 스크롤)
-// http://mobicon.tistory.com/category/Git%2C%20GitHub    #git #github #개발 #Bootstrap #AngularJS
-// pinterest 처럼 예쁘게
-// 이 user가 쓰는 태그들 나열하기
