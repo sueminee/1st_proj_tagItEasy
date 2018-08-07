@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import '../img/logo.png'
 import Post from './02_post';
 import Links from './03_1_links';
@@ -17,6 +18,7 @@ class Home extends Component {
     datas:[],
     sortBy: 'new',
     selectedItem: [],
+    isEmpty: true
   }
 
   componentDidMount(){
@@ -24,7 +26,8 @@ class Home extends Component {
   }
 
   getTagData = () => {
-    fetch('http://localhost:8080/urls/tags',{
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls/tags',{
+    // fetch('api/urls/tags', {
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -48,7 +51,8 @@ class Home extends Component {
   }
 
   getDBdata = () => {
-    fetch('http://localhost:8080/urls/new',{
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls/new',{
+    // fetch('api/urls/new', {
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -61,7 +65,8 @@ class Home extends Component {
       console.log('getDBdata 함수에서 GET해온 data', data)
       this.setState({
         datas: data,
-        query: data[0].tag[0]
+        query: data[0].tag[0],
+        isEmpty: false
       })
       this.getYoutubeData(data[0].tag[0])
       this.getTagData();
@@ -103,7 +108,8 @@ class Home extends Component {
       tagThree: tagThree  
     }
 
-    fetch('http://localhost:8080/urls', {
+    fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls', {
+    // fetch('api/urls', {
       method : 'POST',
 			headers: {
         'Accept' : 'application/json, text/plain, */*',
@@ -120,15 +126,13 @@ class Home extends Component {
       this.getYoutubeData();
     })
     .catch((err) => console.log('submitNewURL fetch err : ', err))
-
-
   }
   //______________________________________________________________________________________________________
   
   logout = (e) => {
     e.preventDefault();
     window.localStorage.removeItem('token');
-    this.props.history.push('/auth/login')
+    this.props.history.push('/')
   }
 
   getFilteredData =(e) =>{
@@ -180,10 +184,15 @@ class Home extends Component {
   }
 
   render() {
+
+    if (!window.localStorage.getItem('token')) {
+      return <Redirect to ='/'/>;
+    }
+        
     return (
       <div className="App">
-        <header className="App-header">
-          <div className="logo">
+        <header className="App-header-home">
+          <div className="logo-home">
             <img src={require("../img/logo.png")} alt=""/>
           </div>
           <div>
@@ -194,29 +203,26 @@ class Home extends Component {
         </header>
         <div>
           <Post urlChange={this.urlChange}
-                  desChange={this.desChange}
-                  tag1Change={this.tag1Change}
-                  tag2Change={this.tag2Change}
-                  tag3Change={this.tag3Change}
-                  submitNewURL={this.submitNewURL} />
-
-          <Links datas={this.state.datas}
-                tags={this.state.tags}
-                tagsWithNum={this.state.tagsWithNum}
-                sortBy={this.state.sortBy}
-                selectedItem={this.state.selectedItem}
-                getFilteredData={this.getFilteredData} 
-                handleCheckboxChange={this.handleCheckboxChange} 
-                handleRadioChange={this.handleRadioChange}
-                getDBdata={this.getDBdata} />
+                desChange={this.desChange}
+                tag1Change={this.tag1Change}
+                tag2Change={this.tag2Change}
+                tag3Change={this.tag3Change}
+                submitNewURL={this.submitNewURL} />
+            {this.state.isEmpty ?
+              <div className="isEmpty">북마크하고 싶은 URL이 있다면, 위 파란박스 URL에 붙여넣기 해주세요!</div>
+              : <Links datas={this.state.datas}
+                        tags={this.state.tags}
+                        tagsWithNum={this.state.tagsWithNum}
+                        sortBy={this.state.sortBy}
+                        selectedItem={this.state.selectedItem}
+                        getFilteredData={this.getFilteredData} 
+                        handleCheckboxChange={this.handleCheckboxChange} 
+                        handleRadioChange={this.handleRadioChange}
+                        getDBdata={this.getDBdata} />}
           
-          {this.state.videos === null ? <div>loading...</div> :
-          <div>
-            <div>
-              <Youtube query={this.state.query} videos={this.state.videos}/>
-            </div>
-          </div>}
-
+            {this.state.videos === null ?
+              <div>곧 로딩!</div>
+              : <div><Youtube query={this.state.query} videos={this.state.videos}/></div>}
         </div>
       </div>
     );
