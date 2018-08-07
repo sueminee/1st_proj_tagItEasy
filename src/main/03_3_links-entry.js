@@ -56,7 +56,7 @@ const LinksEntry = (props) => {
     <div className="urls-form">
       <div className="link-list" >
         <div>
-          <div className="url-delete" ><img src={require("../img/03_delete.png")} alt=""/></div>
+          <div className="url-delete" onClick={() => {delUrl(props.data)}}><img src={require("../img/03_delete.png")} alt=""/></div>
           {/* <button className="url-delete" onClick={() => {delUrl(props.data)}}>삭제</button> */}
           <div className="link-title" onClick={() => {clickCounter(props.data)}}>{props.data.description}</div>
         </div>

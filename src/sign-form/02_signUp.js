@@ -42,7 +42,7 @@ class Signup extends Component {
       })
       .then((data) => {
         console.log('서버로부터의 메세지: ', data.message)
-        if (data.message.includes('Wrong') || data.message.includes('error')) {
+        if (data.message.includes('Wrong') || data.message.includes('error') || data.message.includes('exists')) {
           this.setState({ 
             message: data.message
           })

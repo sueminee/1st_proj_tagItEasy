@@ -220,12 +220,17 @@ h5 {
   justify-content: center;
   width: 100%;
   margin: 0 0 4em 0;
-  background-color: rgba(181, 181, 181, 0.214);
+  background-color: rgb(229, 229, 238);;
 }
 
 .youtube-item {
   margin: 0.6em;
   width: 30%;
+}
+
+iframe{
+  margin: 0.8em 0;
+  width: 100%;
 }
 
 .app-title, h2{
@@ -244,7 +249,7 @@ h5 {
   align-items: center;
   width: 100%;
   justify-content: center;
-  background-color: #eef;
+  background-color: rgb(229, 229, 238);
   text-align: left;
   border-radius: 0.1em;
 }
@@ -272,7 +277,7 @@ h5 {
 }
 
 .filter-button {
-  background-color: #bbc;
+  background-color: rgb(214, 214, 221);
   text-align: center;
   padding: 0.7em;
 }

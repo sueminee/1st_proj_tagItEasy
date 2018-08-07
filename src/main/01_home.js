@@ -4,6 +4,7 @@ import '../img/logo.png'
 import Post from './02_post';
 import Links from './03_1_links';
 import Youtube from './04_1_youtube-list';
+import ReactLoading from 'react-loading';
 
 class Home extends Component {
   state = {
@@ -18,14 +19,46 @@ class Home extends Component {
     datas:[],
     sortBy: 'new',
     selectedItem: [],
-    isEmpty: true
+    noEmpty: false,
+    isLoading: false
   }
+
+  
 
   componentDidMount() {
     if (!window.localStorage.getItem('token')) {
       return <Redirect to ='/'/>;
     }
     this.getDBdata();
+  }
+
+  getDBdata = () => {
+    this.setState({isLoading: true})
+    // fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls/new',{
+    // fetch('api/urls/new', {
+    fetch('http://localhost:8080/urls/new',{  
+      method : 'GET',
+      headers: {
+        'Accept' : 'application/JSON, text/plain, */*',
+        'Content-type' : 'application/json',
+        'Authorization' : window.localStorage.token
+      },
+    })
+    .then(res => res.json())
+    .then(data => {
+      // console.log('getDBdata 함수에서 GET해온 data', data)
+      this.setState({
+        datas: data,
+        query: data[0].tag[0],
+        isLoading: false
+      })
+      if(this.state.datas!==[]){
+        this.setState({noEmpty: true})
+      }
+      this.getYoutubeData(data[0].tag[0])
+      this.getTagData();
+    })
+    .catch(err => console.log("getDBdata 함수에서 GET요청 실패했다", err))
   }
 
   getTagData = () => {
@@ -54,30 +87,6 @@ class Home extends Component {
     .catch(err => console.log("getTagData 함수에서 GET요청 실패err : ", err))
   }
 
-  getDBdata = () => {
-    // fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls/new',{
-    // fetch('api/urls/new', {
-    fetch('http://localhost:8080/urls/new',{  
-      method : 'GET',
-      headers: {
-        'Accept' : 'application/JSON, text/plain, */*',
-        'Content-type' : 'application/json',
-        'Authorization' : window.localStorage.token
-      },
-    })
-    .then(res => res.json())
-    .then(data => {
-      // console.log('getDBdata 함수에서 GET해온 data', data)
-      this.setState({
-        datas: data,
-        query: data[0].tag[0],
-        isEmpty: false
-      })
-      this.getYoutubeData(data[0].tag[0])
-      this.getTagData();
-    })
-    .catch(err => console.log("getDBdata 함수에서 GET요청 실패했다", err))
-  }
 
   getYoutubeData = (q) => {
     const query = q;
@@ -190,6 +199,11 @@ class Home extends Component {
   }
 
   render() {
+
+    if (this.state.isLoading) {
+      <ReactLoading type="bars" color="#bbc"/>
+    }
+
     return (
       <div className="App">
         <header className="App-header-home">
@@ -223,7 +237,7 @@ class Home extends Component {
                           handleCheckboxChange={this.handleCheckboxChange}
                           handleRadioChange={this.handleRadioChange}
                           getDBdata={this.getDBdata} />
-                    <div>곧 로딩!</div>
+                    <ReactLoading type="bars" color="#bbc"/>
                   </div>
                 : <div>
                     <Links datas={this.state.datas}
