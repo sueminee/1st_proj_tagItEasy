@@ -35,8 +35,10 @@ class Home extends Component {
 
   getDBdata = () => {
     this.setState({isLoading: true})
+
     fetch('/api/urls/new', {
     //  fetch('http://localhost:8080/urls/new',{  
+
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -66,6 +68,7 @@ class Home extends Component {
   getTagData = () => {
     fetch('/api/urls/tags', {
     //  fetch('http://localhost:8080/urls/tags',{
+
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',

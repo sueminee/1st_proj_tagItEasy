@@ -25,7 +25,6 @@ class Login extends Component {
     let email = this.state.user.email
     let password = this.state.user.password
 
-
     fetch('/api/', {
     // fetch('http://localhost:8080/', {
         method : 'POST',
