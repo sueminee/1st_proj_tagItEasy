@@ -5,6 +5,7 @@ import Post from './02_post';
 import Links from './03_1_links';
 import Youtube from './04_1_youtube-list';
 import ReactLoading from 'react-loading';
+import IsEmpty from './05_isEmpty'
 
 class Home extends Component {
   state = {
@@ -19,7 +20,7 @@ class Home extends Component {
     datas:[],
     sortBy: 'new',
     selectedItem: [],
-    noEmpty: false,
+    isEmpty: false,
     isLoading: false
   }
 
@@ -34,9 +35,8 @@ class Home extends Component {
 
   getDBdata = () => {
     this.setState({isLoading: true})
-    // fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls/new',{
-    // fetch('api/urls/new', {
-    fetch('http://localhost:8080/urls/new',{  
+    fetch('/api/urls/new', {
+    // fetch('http://localhost:8080/urls/new',{  
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -49,22 +49,23 @@ class Home extends Component {
       // console.log('getDBdata 함수에서 GET해온 data', data)
       this.setState({
         datas: data,
-        query: data[0].tag[0],
         isLoading: false
       })
-      if(this.state.datas!==[]){
-        this.setState({noEmpty: true})
+      if(data.length===0){
+        this.setState({isEmpty: true})
+        console.log(this.state.isEmpty)
+      } else{
+        this.setState({query: data[0].tag[0]})
+        this.getYoutubeData(data[0].tag[0])
+        this.getTagData();
       }
-      this.getYoutubeData(data[0].tag[0])
-      this.getTagData();
     })
     .catch(err => console.log("getDBdata 함수에서 GET요청 실패했다", err))
   }
 
   getTagData = () => {
-    // fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls/tags',{
-    // fetch('api/urls/tags', {
-    fetch('http://localhost:8080/urls/tags',{
+    fetch('/api/urls/tags', {
+    // fetch('http://localhost:8080/urls/tags',{
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -122,9 +123,8 @@ class Home extends Component {
       tagThree: tagThree  
     }
 
-    // fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/urls', {
-    // fetch('api/urls', {
-    fetch('http://localhost:8080/urls', {  
+    fetch('/api/urls', {
+    // fetch('http://localhost:8080/urls', {  
       method : 'POST',
 			headers: {
         'Accept' : 'application/json, text/plain, */*',
@@ -150,13 +150,16 @@ class Home extends Component {
     this.props.history.push('/')
   }
 
-  getFilteredData =(e) =>{
+  getFilteredData = (e) =>{
     e.preventDefault();
-    let query = `http://localhost:8080/urls/new`
+    // let query = `http://localhost:8080/urls/new`
+    let query = `api/urls/new`
     if(this.state.selectedItem.length > 0){
-      query =`http://localhost:8080/urls/${this.state.sortBy}/tags?array=${JSON.stringify(this.state.selectedItem)}`
+      // query =`http://localhost:8080/urls/${this.state.sortBy}/tags?array=${JSON.stringify(this.state.selectedItem)}`
+      query =`/api/urls/${this.state.sortBy}/tags?array=${JSON.stringify(this.state.selectedItem)}`
     } else{
-      query =`http://localhost:8080/urls/${this.state.sortBy}`
+      // query =`http://localhost:8080/urls/${this.state.sortBy}`
+      query =`/api/urls/${this.state.sortBy}`
     }
     console.log("getFilteredData 함수 fetch전 query", query)
     fetch(query, {
@@ -200,10 +203,6 @@ class Home extends Component {
 
   render() {
 
-    if (this.state.isLoading) {
-      <ReactLoading type="bars" color="#bbc"/>
-    }
-
     return (
       <div className="App">
         <header className="App-header-home">
@@ -224,34 +223,26 @@ class Home extends Component {
                 tag3Change={this.tag3Change}
                 submitNewURL={this.submitNewURL} />
 
-          {this.state.isEmpty
-            ? <div className="isEmpty">북마크하고 싶은 URL이 있다면, 위 파란박스 URL에 붙여넣기 해주세요!</div>
-            : (this.state.videos === null
-                ? <div>
-                    <Links datas={this.state.datas}
-                          tags={this.state.tags}
-                          tagsWithNum={this.state.tagsWithNum}
-                          sortBy={this.state.sortBy}
-                          selectedItem={this.state.selectedItem}
-                          getFilteredData={this.getFilteredData}
-                          handleCheckboxChange={this.handleCheckboxChange}
-                          handleRadioChange={this.handleRadioChange}
-                          getDBdata={this.getDBdata} />
-                    <ReactLoading type="bars" color="#bbc"/>
-                  </div>
-                : <div>
-                    <Links datas={this.state.datas}
-                          tags={this.state.tags}
-                          tagsWithNum={this.state.tagsWithNum}
-                          sortBy={this.state.sortBy}
-                          selectedItem={this.state.selectedItem}
-                          getFilteredData={this.getFilteredData}
-                          handleCheckboxChange={this.handleCheckboxChange}
-                          handleRadioChange={this.handleRadioChange}
-                          getDBdata={this.getDBdata} />
-                    <Youtube query={this.state.query} videos={this.state.videos}/>
-                  </div>
-                )}
+        
+        {this.state.isEmpty
+          ? <IsEmpty />
+          : <div>
+              <Links datas={this.state.datas}
+                tags={this.state.tags}
+                tagsWithNum={this.state.tagsWithNum}
+                sortBy={this.state.sortBy}
+                selectedItem={this.state.selectedItem}
+                getFilteredData={this.getFilteredData}
+                handleCheckboxChange={this.handleCheckboxChange}
+                handleRadioChange={this.handleRadioChange}
+                getDBdata={this.getDBdata} />
+
+              {this.state.videos === null
+                ? <ReactLoading type="bars" color="#bbc"/>
+                : <Youtube query={this.state.query} videos={this.state.videos}/>
+              }
+            </div>
+        } 
         </div>
       </div>
     );
