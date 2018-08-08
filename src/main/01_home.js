@@ -35,8 +35,10 @@ class Home extends Component {
 
   getDBdata = () => {
     this.setState({isLoading: true})
-    // fetch('/api/urls/new', {
-     fetch('http://localhost:8080/urls/new',{  
+
+    fetch('/api/urls/new', {
+    //  fetch('http://localhost:8080/urls/new',{  
+
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -64,8 +66,9 @@ class Home extends Component {
   }
 
   getTagData = () => {
-    // fetch('/api/urls/tags', {
-     fetch('http://localhost:8080/urls/tags',{
+    fetch('/api/urls/tags', {
+    //  fetch('http://localhost:8080/urls/tags',{
+
       method : 'GET',
       headers: {
         'Accept' : 'application/JSON, text/plain, */*',
@@ -112,7 +115,7 @@ class Home extends Component {
   tag2Change = (e) => {this.setState({tagTwo: e.target.value.trim()})}
   tag3Change = (e) => {this.setState({tagThree: e.target.value.trim()})}
 
-  submitNewURL = (e) => {
+  submitNewURL = () => {
     // e.preventDefault();
     let {url, description, tagOne, tagTwo, tagThree}  = this.state;
     let payload ={
@@ -123,8 +126,8 @@ class Home extends Component {
       tagThree: tagThree  
     }
 
-    // fetch('/api/urls', {
-     fetch('http://localhost:8080/urls', {  
+    fetch('/api/urls', {
+    //  fetch('http://localhost:8080/urls', {  
       method : 'POST',
 			headers: {
         'Accept' : 'application/json, text/plain, */*',
@@ -152,14 +155,14 @@ class Home extends Component {
 
   getFilteredData = (e) =>{
     e.preventDefault();
-     let query = `http://localhost:8080/urls/new`
-    // let query = `/api/urls/new`
+    //  let query = `http://localhost:8080/urls/new`
+    let query = `/api/urls/new`
     if(this.state.selectedItem.length > 0){
-      query =`http://localhost:8080/urls/${this.state.sortBy}/tags?array=${JSON.stringify(this.state.selectedItem)}`
-      // query =`/api/urls/${this.state.sortBy}/tags?array=${JSON.stringify(this.state.selectedItem)}`
+      // query =`http://localhost:8080/urls/${this.state.sortBy}/tags?array=${JSON.stringify(this.state.selectedItem)}`
+      query =`/api/urls/${this.state.sortBy}/tags?array=${JSON.stringify(this.state.selectedItem)}`
     } else{
-      query =`http://localhost:8080/urls/${this.state.sortBy}`
-      // query =`/api/urls/${this.state.sortBy}`
+      // query =`http://localhost:8080/urls/${this.state.sortBy}`
+      query =`/api/urls/${this.state.sortBy}`
     }
     console.log("getFilteredData 함수 fetch전 query", query)
     fetch(query, {
