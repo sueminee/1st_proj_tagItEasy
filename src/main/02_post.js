@@ -5,7 +5,7 @@ class Post extends Component {
     return (
       <div className="search-compo">
       {/* {console.log("안녕 i am in post render")} */}
-        <form  className="search-form" onSubmit={(e) => {this.props.submitNewURL(e)}}>
+        <div  className="search-form" >
            {/* e.preventDefault();
            this.props.submitNewURL(e); */}
           <div className="search-left">
@@ -27,8 +27,8 @@ class Post extends Component {
             </div>
           </div>
           {/* <div> {this.state.tags.map(tag =><label><input type="checkbox" name="tag" value={tag} />{tag}</label>)}</div> */}
-          <div><button className="app-button-white">저장</button></div>
-        </form>
+          <div><button className="app-button-white" onClick={() => {this.props.submitNewURL()}}>저장</button></div>
+        </div>
       </div>
     );
   }
