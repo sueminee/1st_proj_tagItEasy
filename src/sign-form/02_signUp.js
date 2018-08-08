@@ -27,8 +27,8 @@ class Signup extends Component {
       let password = this.state.user.password
 
       // fetch('http://ec2-54-180-2-226.ap-northeast-2.compute.amazonaws.com/signup', {
-      // fetch('api/signup', {
-      fetch('http://localhost:8080/signup', {  
+         fetch('/api/signup', {
+      // fetch('http://localhost:8080/signup', {  
           method : 'POST',
           headers: {
               'Accept' : 'application/json, text/plain, */*',
